@@ -1,0 +1,31 @@
+@define-mixin visually-hidden {
+	position: absolute !important;
+	clip: rect(1px, 1px, 1px, 1px);
+}
+@define-mixin plain-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+@define-mixin flex-center-children {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+@define-mixin clearfix {
+	&:before,
+	&:after {
+		content: " "; /* 1 */
+		display: table; /* 2 */
+	}
+	&:after {
+		clear: both;
+	}
+}
+@define-mixin absolute-fill {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
