@@ -3,7 +3,7 @@ import { SET_TOOL } from '../actions/currentToolActions';
 
 export default createReducer(
 	{
-		[SET_TOOL]: (state, action) => action.payload
+		[SET_TOOL]: (state, action, payload) => payload
 	},
 	'PENCIL'
 );

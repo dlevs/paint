@@ -1,9 +1,8 @@
-import _ from 'lodash';
 import createToolOption from './createToolOption';
 
 export default class Tool {
 	constructor({options, ...otherProps}) {
-		_.each(otherProps, (value, key) => this[key] = value);
+		Object.assign(this, otherProps)
 
 		if (options) {
 			this.options = options.map(({id, initialValue}) => (
