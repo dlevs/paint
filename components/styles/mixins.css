@@ -22,10 +22,17 @@
 		clear: both;
 	}
 }
-@define-mixin absolute-fill {
-	position: absolute;
+@define-mixin fill {
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
+}
+@define-mixin absolute-fill {
+	position: absolute;
+	@mixin fill;
+}
+@define-mixin fixed-fill {
+	position: fixed;
+	@mixin fill;
 }

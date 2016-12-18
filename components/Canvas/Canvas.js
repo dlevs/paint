@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import style from './Canvas.css';
+import { getRelativeCoordsOfEvent } from '../../core/util';
 
 export default class Canvas extends React.Component {
 
@@ -14,19 +15,20 @@ export default class Canvas extends React.Component {
 	}
 
 	setSize() {
-		const {canvas} = this;
-		canvas.width = 1000;//canvas.innerWidth;
-		canvas.height = 1000;//canvas.innerHeight;
+		const c = this.canvas;
+		c.width = c.offsetWidth;
+		c.height = c.offsetHeight;
 		console.log('canvas size set');
 	}
 
 	componentDidMount() {
-		this.setSize();
-
 		this.ctx = this.canvas.getContext('2d');
 		this.ctx.lineCap = 'round';
 
 		window.addEventListener('resize', this.setSize, false);
+
+		// TODO: see why this is necessary
+		setTimeout(this.setSize, 0);
 	}
 
 	componentWillUnmount() {
@@ -47,11 +49,10 @@ export default class Canvas extends React.Component {
 	handleMouseMove(e) {
 		if (!this.isMouseDown) return;
 
-		const {clientX, clientY} = e.target;
+		const {x, y} = getRelativeCoordsOfEvent(e);
 
-		console.log(clientX)
 		this.ctx.beginPath();
-		this.ctx.arc(clientX, clientY, 1, 0, 2 * Math.PI);
+		this.ctx.arc(x, y, 1, 0, 2 * Math.PI);
 		this.ctx.fill();
 	}
 
@@ -70,4 +71,3 @@ export default class Canvas extends React.Component {
 		);
 	}
 }
-
