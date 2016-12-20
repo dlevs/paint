@@ -1,0 +1,4 @@
+@import "../styles/mixins.css";
+.container{
+	@mixin 'plain-list';
+}

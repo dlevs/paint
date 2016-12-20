@@ -35,6 +35,8 @@ const config = {
 		'!!style!css!normalize.css',
 		'!!style!css!font-awesome/css/font-awesome.min.css',
 
+		'!!style!css!./components/styles/global.css',
+
 		/* The main entry point of your JavaScript application */
 		'./main.js',
 	],

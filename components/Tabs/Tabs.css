@@ -1,0 +1,14 @@
+@import "../styles/mixins.css";
+.container {
+	@mixin plain-list;
+}
+.tabButtons {
+	background: none;
+	border: 1px solid #333;
+}
+.tabList {
+	@mixin plain-list
+}
+.tabListItem {
+	float: right;
+}

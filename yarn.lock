@@ -1963,6 +1963,10 @@ emitter-steward@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/emitter-steward/-/emitter-steward-1.0.0.tgz#f3411ade9758a7565df848b2da0cbbd1b46cbd64"
 
+emojilib:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/emojilib/-/emojilib-2.0.2.tgz#df91c45ede69f2d0ffd3d80acf8c72771b2a5ea1"
+
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"

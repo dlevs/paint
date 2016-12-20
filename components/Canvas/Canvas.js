@@ -15,10 +15,10 @@ export default class Canvas extends React.Component {
 	}
 
 	setSize() {
-		const c = this.canvas;
-		c.width = c.offsetWidth;
-		c.height = c.offsetHeight;
-		console.log('canvas size set');
+		const {canvas, ctx} = this;
+		canvas.width = canvas.offsetWidth;
+		canvas.height = canvas.offsetHeight;
+		ctx.translate(0.5, 0.5);
 	}
 
 	componentDidMount() {
@@ -38,8 +38,12 @@ export default class Canvas extends React.Component {
 
 	// Event Handling
 	//-------------------------------------------------------
-	handleMouseDown() {
+	handleMouseDown(e) {
 		this.isMouseDown = true;
+		const point = getRelativeCoordsOfEvent(e);
+		this.lastPoint = point;
+		// this.drawCircle(point.x, point.y);
+		this.drawCharacter(point.x, point.y, '😀');
 	}
 
 	handleMouseUp() {
@@ -48,12 +52,39 @@ export default class Canvas extends React.Component {
 
 	handleMouseMove(e) {
 		if (!this.isMouseDown) return;
+		const point = getRelativeCoordsOfEvent(e);
+		//this.drawLine(this.lastPoint.x, this.lastPoint.y, point.x, point.y);
+		this.drawCharacter(point.x, point.y, '😀');
+		this.lastPoint = point;
+	}
 
-		const {x, y} = getRelativeCoordsOfEvent(e);
 
-		this.ctx.beginPath();
-		this.ctx.arc(x, y, 1, 0, 2 * Math.PI);
-		this.ctx.fill();
+	// Drawing
+	//-------------------------------------------------------
+	drawCircle(x, y) {
+		const {ctx} = this;
+		ctx.beginPath();
+		ctx.arc(x, y, 1, 0, 2 * Math.PI);
+		ctx.fill();
+	}
+
+	drawLine(x1, y1, x2, y2) {
+		const {ctx} = this;
+		ctx.beginPath();
+		ctx.moveTo(x1, y1);
+		ctx.lineTo(x2, y2);
+		ctx.stroke();
+		ctx.fill();
+	};
+
+	drawCharacter(x, y, char) {
+		// TODO: remove boilerplate
+		const {ctx} = this;
+		const fontSize = 20;
+		ctx.fillStyle = "#FEC7F4";
+		ctx.strokeStyle = "##FEC7F4";
+		ctx.font = 20 + 'px Arial';
+		ctx.fillText(char, x - fontSize / 2, y + fontSize / 2);
 	}
 
 

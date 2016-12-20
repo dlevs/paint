@@ -78,6 +78,11 @@ export default new ToolsList([
 	{
 		id: 'EMOJI',
 		label: 'Emoji',
-		icon: 'fa-smile-o'
+		icon: 'fa-smile-o',
+		options: [
+			{
+				id: 'EMOJI'
+			}
+		]
 	}
 ]);

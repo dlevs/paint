@@ -1,0 +1,10 @@
+.container {
+	position: fixed;
+	top: 100px;
+	left: 100px;
+	z-index: 200;
+	max-width: 500px;
+	max-height: 400px;
+	background: #fff;
+	box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
