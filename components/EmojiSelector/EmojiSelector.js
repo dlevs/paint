@@ -1,39 +1,84 @@
 import React, { PropTypes } from 'react';
 import Tabs from '../Tabs';
 import Tab from '../Tab';
-import { getCategorisedList } from '../../core/emoji';
+import { getCategorisedList, search } from '../../core/emoji';
 import _ from 'lodash';
 import style from './EmojiSelector.css';
 
 const emojiCategories = getCategorisedList();
-console.log(emojiCategories);
 
-export default () => (
-	<div className={style.container}>
-		<h2>EmojiSelector</h2>
-		<Tabs value="flags">
-			{_.map(emojiCategories, (emojis, category) => (
-				<Tab
-					key={category}
-					label={category}
-					value={category}
-				>
-					<ul>
-						{emojis.map(emoji => (
-							<li key={emoji.name}>
-								<label>
-									{emoji.char}
-									<input
-										type="radio"
-										name="emoji"
-										value={emoji.char}
-									/>
-								</label>
-							</li>
-						))}
-					</ul>
-				</Tab>
-			))}
-		</Tabs>
-	</div>
+const EmojiCategoryTab = ({emojis, ...otherProps}) => (
+	<Tab {...otherProps}>
+		<ul className={style.emojiList}>
+			{emojis.map(({char, name}) => <Emoji key={name} char={char}/>)}
+		</ul>
+	</Tab>
 );
+
+class Emoji extends React.PureComponent {
+	render() {
+		const {char} = this.props;
+		return (
+			<li className={style.emojiListItem}>
+				<button
+					className={style.emojiButton}
+					type="button"
+					name="emoji"
+					value={char}
+				>
+					{char}
+				</button>
+			</li>
+		)
+	};
+}
+
+const categories = {};
+const MIN_SEARCH_LEGNTH = 3;
+
+
+export default class EmojiSelector extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			search: ''
+		};
+		this.handleSearch = this.handleSearch.bind(this);
+	}
+
+	handleSearch(e) {
+		const {value} = e.target;
+		this.setState({search: value});
+	}
+
+	render() {
+		// TODO: Maybe move this code out of render. FN is memoized so may be ok
+		const isSearchNotLongEnough = this.state.search.length < MIN_SEARCH_LEGNTH;
+		const allEmojiCategories = {
+			...emojiCategories,
+			search: isSearchNotLongEnough ? [] : search(this.state.search)
+		};
+
+		return (
+			<div className={style.container}>
+				<h2>EmojiSelector</h2>
+				<input
+					type="search"
+					value={this.state.search}
+					onChange={this.handleSearch}
+				/>
+				<Tabs value="search">
+					{_.map(allEmojiCategories, (emojis, category) => (
+						<EmojiCategoryTab
+							key={category}
+							category={category}
+							label={category}
+							value={category}
+							emojis={emojis}
+						/>
+					))}
+				</Tabs>
+			</div>
+		)
+	}
+}

@@ -1,10 +1,43 @@
+@import "../styles/mixins.css";
+:root {
+	--emoji-button-width: 70px;
+	--emoji-per-row: 8;
+}
 .container {
 	position: fixed;
-	top: 100px;
-	left: 100px;
+	top: 200px;
+	left: 200px;
 	z-index: 200;
-	max-width: 500px;
+	max-width: calc(var(--emoji-button-width) * var(--emoji-per-row));
 	max-height: 400px;
 	background: #fff;
-	box-shadow: 0 0 20px rgba(0,0,0,0.2);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	overflow: scroll;
+}
+.emojiList {
+	@mixin plain-list;
+	@mixin clearfix;
+}
+.emojiButton {
+	@mixin flex-center-children;
+	background-color: #fff;
+	position: relative;
+	transition: background-color 0.3s;
+	border: none;
+	display: block;
+	float: left;
+	width: var(--emoji-button-width);
+	height: var(--emoji-button-width);
+	padding: 0;
+	font-size: calc(var(--emoji-button-width) * 0.6);
+	cursor: pointer;
+	overflow: hidden;
+
+	&:hover {
+		background-color: #eee;
+	}
+	&:focus {
+		/* Move this tile above others so focus ring isn't cut off */
+		z-index: 1;
+	}
 }

@@ -7,8 +7,9 @@
 	border: 1px solid #333;
 }
 .tabList {
-	@mixin plain-list
+	@mixin plain-list;
+	@mixin clearfix;
 }
 .tabListItem {
-	float: right;
+	float: left;
 }

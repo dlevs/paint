@@ -8,15 +8,17 @@ class TabItem extends React.Component {
 	}
 
 	render() {
-		const {label, className} = this.props;
+		const {label, value} = this.props;
 		return (
 			<li role="tab" className={style.tabListItem}>
 				{
 					/* Using buttons as it's easier to intercept and prevent
-					actions than with radio inputs. */
+					 actions than with radio inputs. */
 				}
 				<button
-					onClick={this.handleClick}
+					type="button"
+					name="tab"
+					value={value}
 					className={style.tabButtons}
 				>
 					{label}
@@ -30,25 +32,31 @@ export default class Tabs extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {value: props.value};
-		this.handleTabClick = this.handleTabClick.bind(this);
+		this.handleTabsClick = this.handleTabsClick.bind(this);
 	}
 
-	handleTabClick(value) {
-		this.setState({value});
+	handleTabsClick(e) {
+		const {name, value} = e.target;
+		if (name === 'tab') {
+			this.setState({value});
+		}
 	}
 
 	render() {
 		const {children, buttonClassName} = this.props;
 		const {value} = this.state;
-
 		return (
 			<div>
-				<ul role="tablist" className={style.tabList}>
+				<ul
+					role="tablist"
+					className={style.tabList}
+					onClick={this.handleTabsClick}
+				>
 					{children.map(({props}) => (
 						<TabItem
 							{...props}
+							key={props.value}
 							className={buttonClassName}
-							handleClick={this.handleTabClick}
 						/>
 					))}
 				</ul>
