@@ -20,12 +20,6 @@ export const getCategorisedList = _.memoize(() => {
 	return _.groupBy(getList(), 'category');
 });
 
-const listContainsItemStartingWith = (array, value) => {
-	for (let item of array) {
-		if (item.startsWith(value)) return true;
-	}
-};
-
 const createWordsMatcher = (string) => {
 	const words = string.split(' ').filter(word => word);
 	return ({keywords, category, name}) => {
