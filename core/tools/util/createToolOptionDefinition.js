@@ -1,6 +1,6 @@
-import React from 'react';
+import { h } from 'preact';
 import { setToolSetting } from '../../actions/toolSettingsActions';
-import { connect } from 'react-redux';
+import { connect } from 'preact-redux';
 import { noop } from  './../../util';
 
 const connectToolOption = (toolId, optionId, initialValue, component, props = {}, transformValue = noop) => (

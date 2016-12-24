@@ -1,4 +1,4 @@
-import React from 'react';
+import { h } from 'preact';
 import ToolsList from './util/ToolsList';
 
 export default new ToolsList([

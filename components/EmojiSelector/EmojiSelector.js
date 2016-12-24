@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import { h, Component } from 'preact';
 import Tabs from '../Tabs';
 import Tab from '../Tab';
 import { getCategorisedList, search } from '../../core/emoji';
@@ -15,29 +15,24 @@ const EmojiCategoryTab = ({emojis, ...otherProps}) => (
 	</Tab>
 );
 
-class Emoji extends React.PureComponent {
-	render() {
-		const {char} = this.props;
-		return (
-			<li className={style.emojiListItem}>
-				<button
-					className={style.emojiButton}
-					type="button"
-					name="emoji"
-					value={char}
-				>
-					{char}
-				</button>
-			</li>
-		)
-	};
-}
+const Emoji = ({char}) => (
+	<li className={style.emojiListItem}>
+		<button
+			className={style.emojiButton}
+			type="button"
+			name="emoji"
+			value={char}
+		>
+			{char}
+		</button>
+	</li>
+);
 
 const categories = {};
 const MIN_SEARCH_LEGNTH = 3;
 
 
-export default class EmojiSelector extends React.Component {
+export default class EmojiSelector extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {

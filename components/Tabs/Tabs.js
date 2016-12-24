@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
+import { h, Component } from 'preact';
 import style from './Tabs.css';
 
-class TabItem extends React.Component {
+class TabItem extends Component {
 	constructor(props) {
 		super(props);
 		this.handleClick = () => props.handleClick(props.value);
@@ -28,7 +28,7 @@ class TabItem extends React.Component {
 	}
 }
 
-export default class Tabs extends React.Component {
+export default class Tabs extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {value: props.value};
@@ -52,16 +52,16 @@ export default class Tabs extends React.Component {
 					className={style.tabList}
 					onClick={this.handleTabsClick}
 				>
-					{children.map(({props}) => (
+					{children.map(({attributes}) => (
 						<TabItem
-							{...props}
-							key={props.value}
+							{...attributes}
+							key={attributes.value}
 							className={buttonClassName}
 						/>
 					))}
 				</ul>
 				<div className={style.container}>
-					{children.filter(child => child.props.value === value)}
+					{children.filter(({attributes}) => attributes.value === value)}
 				</div>
 			</div>
 		);

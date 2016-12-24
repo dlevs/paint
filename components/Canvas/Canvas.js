@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react';
+import { h, Component } from 'preact';
 import style from './Canvas.css';
 import { getRelativeCoordsOfEvent } from '../../core/util';
 
-export default class Canvas extends React.Component {
+export default class Canvas extends Component {
 
 	// Setup
 	//-------------------------------------------------------

@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import { h } from 'preact';
+import { connect } from 'preact-redux';
 import { setColor, switchColors } from '../../core/actions/colorsActions';
 import style from './ColorPicker.css';
 

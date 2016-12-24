@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import { h } from 'preact';
 import Toolbar from '../Toolbar';
 import Canvas from '../Canvas';
 import style from './App.css';

@@ -14,12 +14,9 @@
     "lodash": "^4.17.2",
     "normalize.css": "^5.0.0",
     "postcss-mixins": "^5.4.0",
-    "react": "^15.4.1",
-    "react-addons-perf": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "react-redux": "^4.4.5",
+    "preact": "^7.1.0",
+    "preact-redux": "^1.2.0",
     "redux": "^3.5.2",
-    "redux-form": "^6.2.1",
     "redux-promise-middleware": "^4.1.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^2.5.4",
@@ -80,8 +77,9 @@
       "stage-1"
     ],
     "plugins": [
-      "transform-runtime"
-    ]
+      "transform-runtime",
+	  ["transform-react-jsx", { "pragma": "h" }]
+	]
   },
   "scripts": {
     "test": "jest",

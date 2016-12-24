@@ -1,7 +1,7 @@
 // Util function to help create option definitions.
 //---------------------------------------------------
 import createToolOptionDefinition from './util/createToolOptionDefinition';
-import React from 'react';
+import { h } from 'preact';
 
 
 // Components used by options

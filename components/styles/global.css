@@ -2,7 +2,6 @@
 	box-sizing: border-box;
 }
 html,
-body,
-#container {
+body {
 	height: 100%;
 }
