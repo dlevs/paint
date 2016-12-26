@@ -3,16 +3,16 @@ import { connect } from 'preact-redux';
 import { setColor, switchColors } from '../../core/actions/colorsActions';
 import style from './ColorPicker.css';
 
-const ColorInput = ({type, className, value, onChange}) => (
+const ColorInput = ({type, className, value, onInput}) => (
 	<div
-		className={className}
+		class={className}
 		style={{backgroundColor: value}}
 	>
 		<input
-			className={style.colorInput}
+			class={style.colorInput}
 			type="color"
 			value={value}
-			onChange={onChange}
+			onInput={onInput}
 			data-type={type}
 		/>
 	</div>
@@ -21,23 +21,23 @@ const ColorInput = ({type, className, value, onChange}) => (
 const ColorPicker = ({
 	primaryColor,
 	secondaryColor,
-	handleChange,
+	handleInput,
 	switchColors
 }) => (
-	<div className={style.container}>
+	<div class={style.container}>
 		<ColorInput
 			className={style.swatchPrimary}
 			type="primary"
 			value={primaryColor}
-			onChange={handleChange}
+			onInput={handleInput}
 		/>
 		<ColorInput
 			className={style.swatchSecondary}
 			type="secondary"
 			value={secondaryColor}
-			onChange={handleChange}
+			onInput={handleInput}
 		/>
-		<i className={`fa fa-exchange ${style.colorSwitcher}`}
+		<i class={`fa fa-exchange ${style.colorSwitcher}`}
 		   onClick={switchColors}/>
 	</div>
 );
@@ -48,7 +48,7 @@ export default connect(
 		secondaryColor: state.colors.secondary
 	}),
 	(dispatch) => ({
-		handleChange: ({target}) => {
+		handleInput: ({target}) => {
 			dispatch(
 				setColor(target.dataset.type, target.value)
 			)

@@ -9,23 +9,36 @@ const emojiCategories = getCategorisedList();
 
 const EmojiCategoryTab = ({emojis, ...otherProps}) => (
 	<Tab {...otherProps}>
-		<ul className={style.emojiList}>
-			{emojis.map(({char, name}) => <Emoji key={name} char={char}/>)}
-		</ul>
+		<ul
+			class={style.emojiList}
+			dangerouslySetInnerHTML={{__html: emojiListHtml(emojis)}}
+		/>
 	</Tab>
 );
 
-const Emoji = ({char}) => (
-	<li className={style.emojiListItem}>
-		<button
-			className={style.emojiButton}
-			type="button"
-			name="emoji"
-			value={char}
-		>
-			{char}
-		</button>
-	</li>
+/**
+ * Allowing react to render every emoji means react has to deal with ~600 items.
+ * This causes noticable lag when initially rendering the list.
+ *
+ * For this reason, it is rendered as a html string.
+ * @param emojis
+ */
+const emojiListHtml = (emojis) => (
+	emojis
+		.filter(({char}) => char)
+		.map(({char}) => (
+			`<li>
+				<button
+					class=${style.emojiButton}
+					type="button"
+					name="emoji"
+					value=${char}
+				>
+					${char}
+				</button>
+			</li>`
+		))
+		.join('')
 );
 
 const categories = {};
@@ -36,31 +49,25 @@ export default class EmojiSelector extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			search: ''
+			searchValue: ''
 		};
-		this.handleSearch = this.handleSearch.bind(this);
 	}
 
-	handleSearch(e) {
-		const {value} = e.target;
-		this.setState({search: value});
-	}
-
-	render() {
+	render({}, {searchValue}) {
 		// TODO: Maybe move this code out of render. FN is memoized so may be ok
-		const isSearchNotLongEnough = this.state.search.length < MIN_SEARCH_LEGNTH;
+		const isSearchNotLongEnough = searchValue.length < MIN_SEARCH_LEGNTH;
 		const allEmojiCategories = {
 			...emojiCategories,
-			search: isSearchNotLongEnough ? [] : search(this.state.search)
+			search: isSearchNotLongEnough ? [] : search(searchValue)
 		};
 
 		return (
-			<div className={style.container}>
+			<div class={style.container}>
 				<h2>EmojiSelector</h2>
 				<input
 					type="search"
-					value={this.state.search}
-					onChange={this.handleSearch}
+					value={searchValue}
+					onInput={this.linkState('searchValue')}
 				/>
 				<Tabs value="search">
 					{_.map(allEmojiCategories, (emojis, category) => (

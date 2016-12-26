@@ -10,7 +10,7 @@ const connectToolOption = (toolId, optionId, initialValue, component, props = {}
 			value: state.toolSettings[toolId][optionId]
 		}),
 		(dispatch) => ({
-			handleChange: (e) => {
+			handleInput: (e) => {
 				dispatch(
 					setToolSetting(toolId, optionId, transformValue(e.target.value))
 				);

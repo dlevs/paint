@@ -6,18 +6,18 @@ export default ({
 	min = 0,
 	max,
 	label,
-	handleChange
+	handleInput
 }) => (
 	<div>
 		<label>
 			{label} - {value}
 			<input
-				className={style.input}
+				class={style.input}
 				type="range"
 				value={value}
 				min={min}
 				max={max}
-				onChange={handleChange}
+				onInput={handleInput}
 			/>
 		</label>
 	</div>

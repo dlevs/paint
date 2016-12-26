@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import style from './Canvas.css';
 import { getRelativeCoordsOfEvent } from '../../core/util';
+const ratio = window.devicePixelRatio || 1;
 
 export default class Canvas extends Component {
 
@@ -16,8 +17,9 @@ export default class Canvas extends Component {
 
 	setSize() {
 		const {canvas, ctx} = this;
-		canvas.width = canvas.offsetWidth;
-		canvas.height = canvas.offsetHeight;
+		canvas.width = canvas.offsetWidth * ratio;
+		canvas.height = canvas.offsetHeight * ratio;
+		ctx.scale(ratio, ratio);
 		ctx.translate(0.5, 0.5);
 	}
 
@@ -94,7 +96,7 @@ export default class Canvas extends Component {
 		return (
 			<canvas
 				ref={el => this.canvas = el}
-				className={style.canvas}
+				class={style.canvas}
 				onMouseDown={this.handleMouseDown}
 				onMouseUp={this.handleMouseUp}
 				onMouseMove={this.handleMouseMove}
