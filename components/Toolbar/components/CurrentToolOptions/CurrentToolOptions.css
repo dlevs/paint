@@ -1,0 +1,12 @@
+@import '../../../styles/mixins.css';
+.toolOptionsList {
+	@mixin plain-list;
+	@mixin clearfix;
+}
+.toolOptionsList {
+	padding: 12px 5px 0;
+	font-size: 0.8rem;
+}
+.toolOptionItem {
+	margin-bottom: 12px;
+}
