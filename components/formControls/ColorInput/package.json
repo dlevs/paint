@@ -1,0 +1,6 @@
+{
+    "name":    "ColorInput",
+    "version": "0.0.0",
+    "private": true,
+    "main":    "./ColorInput.js"
+}
