@@ -3,9 +3,10 @@ import _ from 'lodash';
 
 const getList = _.memoize(() => {
 	return emoji.ordered
-		.map(name => ({
-			...emoji.lib[name],
-			name
+		.map(id => ({
+			...emoji.lib[id],
+			id,
+			name: _.capitalize(id.split('_').join(' '))
 		}))
 });
 
@@ -38,3 +39,16 @@ const createWordsMatcher = (string) => {
 export const search = _.memoize(value => {
 	return getList().filter(createWordsMatcher(value));
 });
+
+export const getUserRelevantFlag = () => {
+	const lang = window.navigator.language;
+
+	if (lang) {
+		const country = lang.split('-').pop().toLowerCase();
+		const flag = getList().find(emoji => emoji.id === country);
+
+		if (flag) return flag.char;
+	}
+
+	return '🇫🇷';
+};

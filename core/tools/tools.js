@@ -54,7 +54,12 @@ export default new ToolsList([
 		icon: 'fa-smile-o',
 		options: [
 			{
-				id: 'EMOJI'
+				id: 'SIZE',
+				initialValue: 16
+			},
+			{
+				id: 'EMOJI',
+				initialValue: '💩'
 			}
 		]
 	}

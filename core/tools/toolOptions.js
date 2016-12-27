@@ -1,16 +1,13 @@
 // Util function to help create option definitions.
 //---------------------------------------------------
 import createToolOptionDefinition from './util/createToolOptionDefinition';
-import { h } from 'preact';
 
 
 // Components used by options
 //---------------------------------------------------
 import RangeInput from '../../components/formControls/RangeInput';
+import EmojiSelector from '../../components/EmojiSelector';
 
-const EmojiList = () => (
-	<div>Emoji list</div>
-);
 
 export default {
 	SIZE: createToolOptionDefinition(
@@ -32,6 +29,6 @@ export default {
 		Number
 	),
 	EMOJI: createToolOptionDefinition(
-		EmojiList
+		EmojiSelector
 	)
 };
