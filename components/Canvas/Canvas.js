@@ -1,10 +1,11 @@
 import { h, Component } from 'preact';
+import { connect } from 'preact-redux';
 import style from './Canvas.css';
 import { getRelativeCoordsOfEvent } from '../../core/util';
 import CanvasLayer from '../../core/CanvasLayer';
 // const ratio = window.devicePixelRatio || 1;
 
-export default class Canvas extends Component {
+class Canvas extends Component {
 
 	// Setup
 	//-------------------------------------------------------
@@ -22,6 +23,10 @@ export default class Canvas extends Component {
 	// componentWillUnmount() {
 	// 	window.removeEventListener('resize', this.setSize, false);
 	// }
+
+	componentWillReceiveProps({colors}) {
+		this.canvasLayer.setColor(colors.primary);
+	}
 
 
 	// Event Handling
@@ -62,3 +67,7 @@ export default class Canvas extends Component {
 		);
 	}
 }
+
+export default connect(
+	({colors}) => ({colors})
+)(Canvas);
