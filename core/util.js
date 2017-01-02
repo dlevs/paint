@@ -21,7 +21,10 @@ export const generateId = (prefix) => {
 
 export const noop = (value) => value;
 
-export const getRelativeCoordsOfEvent = ({target, clientX, clientY}) => ({
-	x: clientX - target.offsetLeft,
-	y: clientY - target.offsetTop
-});
+export const getRelativeCoordsOfEvent = ({target, clientX, clientY}) => {
+	const rect = target.getBoundingClientRect();
+	return {
+		x: clientX - rect.left,
+		y: clientY - rect.top
+	}
+};

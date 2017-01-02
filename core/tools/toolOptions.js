@@ -32,3 +32,5 @@ export default {
 		EmojiSelector
 	)
 };
+
+// TODO: The component creation for these options is a bit confusing. Consider moving to components/ containers folder

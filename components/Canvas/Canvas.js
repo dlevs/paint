@@ -1,8 +1,10 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
+import _ from 'lodash';
 import style from './Canvas.css';
 import { getRelativeCoordsOfEvent } from '../../core/util';
 import CanvasLayer from '../../core/CanvasLayer';
+
 // const ratio = window.devicePixelRatio || 1;
 
 class Canvas extends Component {
@@ -11,21 +13,26 @@ class Canvas extends Component {
 	//-------------------------------------------------------
 	constructor(props) {
 		super(props);
+		this.points = [];
 		this.handleEvent = this.handleEvent.bind(this);
 	}
 
 	componentDidMount() {
-		this.canvasLayer = new CanvasLayer(this.canvas);
+		this.canvasLayer = new CanvasLayer(this.canvas, this.props);
 
-		// window.addEventListener('resize', this.setSize, false);
+		//window.addEventListener('resize', this.canvasLayer.setSize.bind(this), false);
 	}
 
 	// componentWillUnmount() {
 	// 	window.removeEventListener('resize', this.setSize, false);
 	// }
 
-	componentWillReceiveProps({colors}) {
-		this.canvasLayer.setColor(colors.primary);
+	shouldComponentUpdate() {
+		return false;
+	}
+
+	componentWillReceiveProps(props) {
+		this.canvasLayer.setStateFromProps(props);
 	}
 
 
@@ -38,18 +45,22 @@ class Canvas extends Component {
 		switch (e.type) {
 			case 'mousedown':
 				this.isMouseDown = true;
+				this.points.push(point);
 				this.canvasLayer.drawCircle(x, y);
 				break;
 			case 'mouseup':
 				this.isMouseDown = false;
+				this.canvasLayer.clear();
+				this.canvasLayer.drawCurve(this.points);
+				this.points = [];
 				break;
 			case 'mousemove':
 				if (!this.isMouseDown) return;
-				this.canvasLayer.drawLine(this.lastPoint.x, this.lastPoint.y, x, y);
+				this.canvasLayer.clear();
+				this.points.push(point);
+				this.canvasLayer.drawCurve(this.points);
 				break;
 		}
-
-		this.lastPoint = point;
 	}
 
 
@@ -69,5 +80,10 @@ class Canvas extends Component {
 }
 
 export default connect(
-	({colors}) => ({colors})
+	({colors, currentTool, toolSettings}) => ({
+		colorPrimary: colors.primary,
+		colorSecondary: colors.secondary,
+		strokeSize: _.get(toolSettings, [currentTool, 'SIZE'], 1),
+		feather:  _.get(toolSettings, [currentTool, 'FEATHER'], 0)
+	})
 )(Canvas);
