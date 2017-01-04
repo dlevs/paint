@@ -94,8 +94,8 @@ export default class CanvasLayer {
 		this.ctx.moveTo(points[0].x, points[0].y);
 
 		for (var i = 1, len = points.length - 2; i < len; i++) {
-			var xc = (points[i].x + points[i + 1].x) / 2;
-			var yc = (points[i].y + points[i + 1].y) / 2;
+			let xc = (points[i].x + points[i + 1].x) / 2;
+			let yc = (points[i].y + points[i + 1].y) / 2;
 			this.ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
 		}
 
