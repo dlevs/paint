@@ -20,7 +20,6 @@
     "redux-promise-middleware": "^4.1.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^2.5.4",
-    "webpack-dashboard": "^0.2.1",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
@@ -68,6 +67,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
+    "webpack-dashboard": "^0.2.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2"
   },
