@@ -20,6 +20,7 @@
     "redux-promise-middleware": "^4.1.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^2.5.4",
+    "webpack-dashboard": "^0.2.1",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
@@ -78,8 +79,13 @@
     ],
     "plugins": [
       "transform-runtime",
-	  ["transform-react-jsx", { "pragma": "h" }]
-	]
+      [
+        "transform-react-jsx",
+        {
+          "pragma": "h"
+        }
+      ]
+    ]
   },
   "scripts": {
     "test": "jest",
@@ -89,8 +95,7 @@
     "build:debug": "node run build --debug",
     "publish": "node run publish",
     "publish:debug": "node run publish --debug",
-    "start": "node run",
-    "start:proxy": "node run start:proxy"
+    "start": "webpack-dashboard -- node run"
   },
   "jest": {
     "testEnvironment": "node"

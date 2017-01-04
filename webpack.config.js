@@ -14,10 +14,11 @@ const path = require('path');
 const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
 const pkg = require('./package.json');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const isDebug = global.DEBUG === false ? false : !process.argv.includes('--release');
 const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-v');
-const useHMR = !!global.HMR; // Hot Module Replacement (HMR)
+const useHMR = !!global.HMR; // Hot Module Replacement (HMR) // TODO: HMR doesn't work. Fix.
 const babelConfig = Object.assign({}, pkg.babel, {
 	babelrc: false,
 	cacheDirectory: useHMR,
@@ -84,6 +85,7 @@ const config = {
 			filename: 'assets.json',
 			prettyPrint: true,
 		}),
+		new DashboardPlugin(),
 	],
 
 	// Options affecting the normal modules
