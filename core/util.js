@@ -21,6 +21,12 @@ export const generateId = (prefix) => {
 
 export const noop = (value) => value;
 
+export const assert = (condition, message = 'Assertion failed') => {
+	if (condition !== true) {
+		throw new Error(message);
+	}
+};
+
 export const getRelativeCoordsOfEvent = ({target, clientX, clientY}) => {
 	const rect = target.getBoundingClientRect();
 	return {
