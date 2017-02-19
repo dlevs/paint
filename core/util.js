@@ -19,8 +19,6 @@ export const generateId = (prefix) => {
 	return prefix + count;
 };
 
-export const noop = (value) => value;
-
 export const assert = (condition, message = 'Assertion failed') => {
 	if (condition !== true) {
 		throw new Error(message);

@@ -4,37 +4,39 @@ import pipe from 'lodash/fp/pipe';
 import pickBy from 'lodash/fp/pickBy';
 import Tool from './Tool';
 
-const mapInitialToolValues = pipe(
-	keyBy(option => option.id),
-	mapValues(option => option.initialValue)
-);
-
-const getInitialToolState = pipe(
-	pickBy(tool => tool.options !== undefined),
-	keyBy(tool => tool.id),
-	mapValues((tool) => mapInitialToolValues(tool.options))
-);
-
 export default class ToolsList {
 	constructor(tools) {
-		// Add as raw list. Components are not created yet, so the raw data
-		// can populate the store, which the components rely on on init.
-		this.rawItems = tools;
+		this.items = tools.map((toolDefinition) => new Tool(toolDefinition));
 	}
 
-	init() {
-		this.items = this.rawItems.map(
-			(toolDefinition) => new Tool(toolDefinition)
-		);
-		return this;
-	}
-
+	/**
+	 * Get the tool with the specified ID.
+	 *
+	 * @param {String} id
+	 * @returns {Tool}
+	 */
 	getById(id) {
 		return this.items.find(tool => tool.id === id);
 	}
 
+	/**
+	 * The intial redux store state is derived from the values defined for the
+	 * tools. This method calculates the initial state.
+	 *
+	 * @returns {Object}
+	 */
 	get initialState() {
-		return getInitialToolState(this.rawItems);
+		const mapInitialToolValues = pipe(
+			keyBy('id'),
+			mapValues(({initialValue}) => initialValue)
+		);
+
+		const getInitialToolsState = pipe(
+			pickBy(({options}) => options !== undefined),
+			keyBy('id'),
+			mapValues(({options}) => mapInitialToolValues(options))
+		);
+
+		return getInitialToolsState(this.items);
 	}
 }
-

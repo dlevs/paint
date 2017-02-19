@@ -1,23 +1,23 @@
-import createToolOption from './createToolOption';
+import toolOptionDefinitions, { getById } from '../toolOptionDefinitions';
 
 export default class Tool {
-	constructor({options, ...otherProps}) {
-		Object.assign(this, otherProps);
+	constructor({id, label, icon, options}) {
+		this.id = id;
+		this.label = label;
+		this.icon = icon;
 
 		if (options) {
-			this.options = options.map(({id, initialValue}) => (
-				createToolOption(
-					// Tool ID (e.g. 'PENCIL')
-					this.id,
+			this.options = options.map(({id, initialValue}) => {
+				const optionId = id;
+				const toolId = this.id;
+				const optionDefintion = toolOptionDefinitions[optionId];
 
-					// Option ID (e.g. 'SIZE')
-					id,
-
-					// Initial value (e.g. 4)
-					// Used to populate inital state in the redux reducer
+				return {
+					id: optionId,
+					Component: optionDefintion.createConnectedComponent(toolId),
 					initialValue
-				)
-			))
+				};
+			})
 		}
 	}
 }

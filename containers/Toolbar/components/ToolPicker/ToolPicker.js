@@ -35,7 +35,7 @@ const Tool = ({
 	)
 };
 
-const connectedTools = tools.rawItems.map(tool => connect(
+const connectedTools = tools.items.map(tool => connect(
 	({currentTool}) => ({
 		...tool,
 		isSelected: tool.id === currentTool
