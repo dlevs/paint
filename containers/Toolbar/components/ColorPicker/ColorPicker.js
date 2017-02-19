@@ -9,16 +9,7 @@ const colorKeys = ['primary', 'secondary'];
 
 // Connected components / component lists
 //----------------------------------------
-const ConnectedColorSwitcher = connect(
-	null,
-	(dispatch) => ({
-		switchColors: () => {
-			dispatch(
-				switchColors()
-			)
-		}
-	})
-)(
+const ColorSwitcher = connect(null, {switchColors})(
 	({switchColors}) => (
 		<i
 			class={`fa fa-exchange ${s.colorSwitcher}`}
@@ -34,9 +25,7 @@ const connectedColorInputs = colorKeys.map(key => (
 		}),
 		(dispatch) => ({
 			handleInput: ({target}) => {
-				dispatch(
-					setColor(key, target.value)
-				)
+				dispatch(setColor(key, target.value))
 			}
 		})
 	)(ColorInput)
@@ -47,6 +36,6 @@ export default () => (
 		{connectedColorInputs.map(ColorInputComponent => (
 			<ColorInputComponent />
 		))}
-		<ConnectedColorSwitcher />
+		<ColorSwitcher />
 	</div>
 );
