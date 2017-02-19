@@ -5,7 +5,7 @@ import createToolOptionDefinition from './util/createToolOptionDefinition';
 
 // Components used by options
 //---------------------------------------------------
-import RangeInput from '../../components/formControls/RangeInput';
+import RangeInput from '../../components/_formControls/RangeInput';
 import EmojiSelector from '../../components/EmojiSelector';
 
 

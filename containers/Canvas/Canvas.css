@@ -1,0 +1,4 @@
+@import "../_styles/mixins.css";
+.canvas {
+	flex-grow: 1;
+}

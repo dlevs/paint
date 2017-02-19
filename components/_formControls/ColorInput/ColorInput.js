@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import style from "./ColorInput.css";
+import s from "./ColorInput.css";
 
 export default ({wrapperClass, value, handleInput}) => (
 	<div
@@ -7,7 +7,7 @@ export default ({wrapperClass, value, handleInput}) => (
 		style={{backgroundColor: value}}
 	>
 		<input
-			class={style.input}
+			class={s.input}
 			type="color"
 			value={value}
 			onInput={handleInput}

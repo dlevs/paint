@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { connect } from 'preact-redux';
 import tools from '../../../../core/tools';
 import { setTool } from '../../../../core/actions/currentToolActions';
-import style from './ToolPicker.css';
+import s from './ToolPicker.css';
 
 const Tool = ({
 	isSelected,
@@ -13,7 +13,7 @@ const Tool = ({
 }) => {
 	const formId = `tool-radio-${id}`;
 	return (
-		<li class={style.toolListItem}>
+		<li class={s.toolListItem}>
 			<input
 				id={formId}
 				type="radio"
@@ -21,14 +21,14 @@ const Tool = ({
 				value={id}
 				checked={isSelected}
 				onChange={handleChange}
-				class={style.toolCheckbox}
+				class={s.toolCheckbox}
 			/>
 			<label
 				for={formId}
-				class={style.toolLabel}
+				class={s.toolLabel}
 				title={label}
 			>
-				<span class={style.visuallyHidden}>{label}</span>
+				<span class={s.visuallyHidden}>{label}</span>
 				<i class={`fa ${icon}`}/>
 			</label>
 		</li>
@@ -50,7 +50,7 @@ const connectedTools = tools.rawItems.map(tool => connect(
 )(Tool));
 
 export default () => (
-	<ul class={style.toolList}>
+	<ul class={s.toolList}>
 		{connectedTools.map(ToolComponent => <ToolComponent />)}
 	</ul>
 );

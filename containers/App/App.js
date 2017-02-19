@@ -1,11 +1,11 @@
 import { h } from 'preact';
 import Toolbar from '../Toolbar';
 import Canvas from '../Canvas';
-import style from './App.css';
+import s from './App.css';
 
 export default () => (
-	<main class={style.mainContainer}>
-		<div class={style.paintAreaContainer}>
+	<main class={s.mainContainer}>
+		<div class={s.paintAreaContainer}>
 			<Toolbar />
 			<Canvas />
 		</div>

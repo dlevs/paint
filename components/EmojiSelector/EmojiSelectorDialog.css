@@ -1,4 +1,4 @@
-@import "../styles/mixins.css";
+@import "../_styles/mixins.css";
 :root {
 	--emoji-button-width: 70px;
 	--emoji-per-row: 8;

@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import get from 'lodash/get';
-import style from './Canvas.css';
+import s from './Canvas.css';
 import { getRelativeCoordsOfEvent } from '../../core/util';
 import CanvasLayer from '../../core/CanvasLayer';
 
@@ -11,34 +11,9 @@ class Canvas extends Component {
 
 	// Setup
 	//-------------------------------------------------------
-	constructor(props) {
-		super(props);
-		this.points = [];
-		this.handleEvent = this.handleEvent.bind(this);
-	}
+	points = [];
 
-	componentDidMount() {
-		this.canvasLayer = new CanvasLayer(this.canvas, this.props);
-
-		//window.addEventListener('resize', this.canvasLayer.setSize.bind(this), false);
-	}
-
-	// componentWillUnmount() {
-	// 	window.removeEventListener('resize', this.setSize, false);
-	// }
-
-	shouldComponentUpdate() {
-		return false;
-	}
-
-	componentWillReceiveProps(props) {
-		this.canvasLayer.setStateFromProps(props);
-	}
-
-
-	// Event Handling
-	//-------------------------------------------------------
-	handleEvent(e) {
+	handleEvent = (e) => {
 		const point = getRelativeCoordsOfEvent(e);
 		const {x, y} = point;
 
@@ -61,8 +36,28 @@ class Canvas extends Component {
 				this.canvasLayer.drawCurve(this.points);
 				break;
 		}
+	};
+
+
+	// Component Lifestyle
+	//-------------------------------------------------------
+	componentDidMount() {
+		this.canvasLayer = new CanvasLayer(this.canvas, this.props);
+
+		//window.addEventListener('resize', this.canvasLayer.setSize.bind(this), false);
 	}
 
+	// componentWillUnmount() {
+	// 	window.removeEventListener('resize', this.setSize, false);
+	// }
+
+	shouldComponentUpdate() {
+		return false;
+	}
+
+	componentWillReceiveProps(props) {
+		this.canvasLayer.setStateFromProps(props);
+	}
 
 	// Render
 	//-------------------------------------------------------
@@ -70,7 +65,7 @@ class Canvas extends Component {
 		return (
 			<canvas
 				ref={canvas => this.canvas = canvas}
-				class={style.canvas}
+				class={s.canvas}
 				onMouseDown={this.handleEvent}
 				onMouseUp={this.handleEvent}
 				onMouseMove={this.handleEvent}
@@ -84,6 +79,6 @@ export default connect(
 		colorPrimary: colors.primary,
 		colorSecondary: colors.secondary,
 		strokeSize: get(toolSettings, [currentTool, 'SIZE'], 1),
-		feather:  get(toolSettings, [currentTool, 'FEATHER'], 0)
+		feather: get(toolSettings, [currentTool, 'FEATHER'], 0)
 	})
 )(Canvas);

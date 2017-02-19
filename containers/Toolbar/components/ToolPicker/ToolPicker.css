@@ -1,5 +1,5 @@
-@import "../../../styles/variables.css";
-@import '../../../styles/mixins.css';
+@import "../../../_styles/variables.css";
+@import '../../../_styles/mixins.css';
 .toolList {
 	@mixin plain-list;
 	@mixin clearfix;

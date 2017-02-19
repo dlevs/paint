@@ -1,8 +1,7 @@
 import { h, Component } from 'preact';
-// import ScrollViewport from 'preact-scroll-viewport';
-import ScrollViewport from '../ScrollWrapper';
+import ScrollViewport from '../ScrollViewport';
 import { getUserRelevantFlag, search } from '../../core/emoji';
-import style from './EmojiSelectorDialog.css';
+import s from './EmojiSelectorDialog.css';
 
 const MIN_SEARCH_LEGNTH = 3;
 
@@ -31,32 +30,22 @@ const categories = [
 
 
 export default class EmojiSelector extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			searchValue: categories[0].value
-		};
-	}
+	state = {searchValue: categories[0].value};
 
 	render({handleInput}, {searchValue}) {
-		// TODO: Maybe move this code out of render. FN is memoized so may be ok
 		const isSearchNotLongEnough = searchValue.length < MIN_SEARCH_LEGNTH;
 		const emojis = isSearchNotLongEnough ? [] : search(searchValue);
 
-
-		let rows = [];
-		for (let x = 1e5; x--;) rows[x] = `Item #${x + 1}`;
-
 		return (
-			<div class={style.container}>
+			<div class={s.container}>
 				<h2>EmojiSelector</h2>
-				<ul class={style.categoryList}>
+				<ul class={s.categoryList}>
 					{categories.map(({label, value}) => (
-						<li key={value} class={style.categoryListItem}>
+						<li key={value} class={s.categoryListItem}>
 							<button
 								onClick={this.linkState('searchValue')}
 								value={value}
-								class={style.categoryButton}
+								class={s.categoryButton}
 								aria-selected={value === searchValue}
 							>
 								{label}
@@ -70,19 +59,19 @@ export default class EmojiSelector extends Component {
 					onInput={this.linkState('searchValue')}
 				/>
 				{/*<ul*/}
-				{/*class={style.emojiList}*/}
+				{/*class={s.emojiList}*/}
 				{/*onClick={handleInput}*/}
 				{/*>    */}
 
 
-				<ScrollViewport rowHeight={70} columns={8}>
+				<ScrollViewport rowHeight={70}>
 					{emojis
 						.filter(({char}) => char)
 						.map(({char, name}, i) => (
 							<div>
 								<button
 									key={name}
-									class={style.emojiButton}
+									class={s.emojiButton}
 									type="submit"
 									name="emoji"
 									title={name}

@@ -1,8 +1,8 @@
 import { h } from 'preact';
 import { connect } from 'preact-redux';
 import { setColor, switchColors } from '../../../../core/actions/colorsActions';
-import ColorInput from '../../../formControls/ColorInput';
-import style from './ColorPicker.css';
+import ColorInput from '../../../_formControls/ColorInput';
+import s from './ColorPicker.css';
 
 const colorKeys = ['primary', 'secondary'];
 
@@ -21,7 +21,7 @@ const ConnectedColorSwitcher = connect(
 )(
 	({switchColors}) => (
 		<i
-			class={`fa fa-exchange ${style.colorSwitcher}`}
+			class={`fa fa-exchange ${s.colorSwitcher}`}
 			onClick={switchColors}
 		/>
 	)
@@ -29,7 +29,7 @@ const ConnectedColorSwitcher = connect(
 const connectedColorInputs = colorKeys.map(key => (
 	connect(
 		(state) => ({
-			wrapperClass: style[key],
+			wrapperClass: s[key],
 			value: state.colors[key]
 		}),
 		(dispatch) => ({
@@ -43,7 +43,7 @@ const connectedColorInputs = colorKeys.map(key => (
 ));
 
 export default () => (
-	<div class={style.container}>
+	<div class={s.container}>
 		{connectedColorInputs.map(ColorInputComponent => (
 			<ColorInputComponent />
 		))}

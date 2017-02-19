@@ -53,14 +53,8 @@ export default class ScrollViewport extends Component {
 		removeEventListener('scroll', this.scrolled, EVENT_OPTS);
 	}
 
-	render({ overscan=10, rowHeight, defaultRowHeight, columns=1, children, ...props }, { offset=0, height=0 }) {
-
-
-		let initialRowHeight = rowHeight;
-		rowHeight = (rowHeight || this.computeRowHeight() || defaultRowHeight || 100) / columns;
-		console.log(rowHeight)
-		let wholeHeight = Math.ceil((rowHeight*children.length) / initialRowHeight) * initialRowHeight;
-console.log(rows)
+	render({ overscan=10, rowHeight, defaultRowHeight, children, ...props }, { offset=0, height=0 }) {
+		rowHeight = rowHeight || this.computeRowHeight() || defaultRowHeight || 100;
 
 		// compute estimated height based on first item height and number of items:
 		let estimatedHeight = rowHeight * children.length;

@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import style from './RangeInput.css';
+import s from './RangeInput.css';
 
 export default ({
 	value,
@@ -12,7 +12,7 @@ export default ({
 		<label>
 			{label} - {value}
 			<input
-				class={style.input}
+				class={s.input}
 				type="range"
 				value={value}
 				min={min}
