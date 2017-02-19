@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
-import _ from 'lodash';
+import get from 'lodash/get';
 import style from './Canvas.css';
 import { getRelativeCoordsOfEvent } from '../../core/util';
 import CanvasLayer from '../../core/CanvasLayer';
@@ -83,7 +83,7 @@ export default connect(
 	({colors, currentTool, toolSettings}) => ({
 		colorPrimary: colors.primary,
 		colorSecondary: colors.secondary,
-		strokeSize: _.get(toolSettings, [currentTool, 'SIZE'], 1),
-		feather:  _.get(toolSettings, [currentTool, 'FEATHER'], 0)
+		strokeSize: get(toolSettings, [currentTool, 'SIZE'], 1),
+		feather:  get(toolSettings, [currentTool, 'FEATHER'], 0)
 	})
 )(Canvas);

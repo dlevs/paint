@@ -1,4 +1,6 @@
 import { h, Component } from 'preact';
+// import ScrollViewport from 'preact-scroll-viewport';
+import ScrollViewport from '../ScrollWrapper';
 import { getUserRelevantFlag, search } from '../../core/emoji';
 import style from './EmojiSelectorDialog.css';
 
@@ -23,24 +25,9 @@ const categories = [
  * For this reason, it is rendered as a html string.
  * @param emojis
  */
-const emojiListHtml = (emojis) => (
-	emojis
-		.filter(({char}) => char)
-		.map(({char, name}) => (
-			`<li>
-				<button
-					class="${style.emojiButton}"
-					type="submit"
-					name="emoji"
-					title="${name}"
-					value="${char}"
-				>
-					${char}
-				</button>
-			</li>`
-		))
-		.join('')
-);
+// const EmojiList = ({emojis}) => (
+//
+// );
 
 
 export default class EmojiSelector extends Component {
@@ -55,6 +42,10 @@ export default class EmojiSelector extends Component {
 		// TODO: Maybe move this code out of render. FN is memoized so may be ok
 		const isSearchNotLongEnough = searchValue.length < MIN_SEARCH_LEGNTH;
 		const emojis = isSearchNotLongEnough ? [] : search(searchValue);
+
+
+		let rows = [];
+		for (let x = 1e5; x--;) rows[x] = `Item #${x + 1}`;
 
 		return (
 			<div class={style.container}>
@@ -78,11 +69,33 @@ export default class EmojiSelector extends Component {
 					value={searchValue}
 					onInput={this.linkState('searchValue')}
 				/>
-				<ul
-					class={style.emojiList}
-					dangerouslySetInnerHTML={{__html: emojiListHtml(emojis)}}
-					onClick={handleInput}
-				/>
+				{/*<ul*/}
+				{/*class={style.emojiList}*/}
+				{/*onClick={handleInput}*/}
+				{/*>    */}
+
+
+				<ScrollViewport rowHeight={70} columns={8}>
+					{emojis
+						.filter(({char}) => char)
+						.map(({char, name}, i) => (
+							<div>
+								<button
+									key={name}
+									class={style.emojiButton}
+									type="submit"
+									name="emoji"
+									title={name}
+									value={char}
+								>
+									{char}
+								</button>
+							</div>
+						))}
+				</ScrollViewport>
+
+
+				{/*</ul>*/}
 			</div>
 		)
 	}

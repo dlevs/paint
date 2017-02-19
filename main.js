@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-import 'whatwg-fetch'; // TODO: Maybe we don't need this. Not any async going on.
 
 import { h, render } from 'preact';
 import { Provider as ReduxProvider } from 'preact-redux';

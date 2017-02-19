@@ -1,5 +1,19 @@
-import _ from 'lodash';
+import keyBy from 'lodash/fp/keyBy';
+import mapValues from 'lodash/fp/mapValues';
+import pipe from 'lodash/fp/pipe';
+import pickBy from 'lodash/fp/pickBy';
 import Tool from './Tool';
+
+const mapInitialToolValues = pipe(
+	keyBy(option => option.id),
+	mapValues(option => option.initialValue)
+);
+
+const getInitialToolState = pipe(
+	pickBy(tool => tool.options !== undefined),
+	keyBy(tool => tool.id),
+	mapValues((tool) => mapInitialToolValues(tool.options))
+);
 
 export default class ToolsList {
 	constructor(tools) {
@@ -20,16 +34,7 @@ export default class ToolsList {
 	}
 
 	get initialState() {
-		return _(this.rawItems)
-			.pickBy(tool => tool.options !== undefined)
-			.keyBy(tool => tool.id)
-			.mapValues(tool => (
-					_(tool.options)
-						.keyBy(option => option.id)
-						.mapValues(option => option.initialValue)
-						.value()
-				)
-			)
-			.value();
+		return getInitialToolState(this.rawItems);
 	}
 }
+

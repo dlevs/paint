@@ -46,7 +46,11 @@ tasks.set('html', () => {
 	const assets = JSON.parse(fs.readFileSync('./public/dist/assets.json', 'utf8'));
 	const template = fs.readFileSync('./public/index.ejs', 'utf8');
 	const render = ejs.compile(template, {filename: './public/index.ejs'});
-	const output = render({debug: webpackConfig.debug, bundle: assets.main.js, config});
+	const output = render({
+		debug: webpackConfig.debug,
+		bundle: assets.main.js,
+		config
+	});
 	fs.writeFileSync('./public/index.html', output, 'utf8');
 });
 
@@ -86,11 +90,14 @@ tasks.set('bundle', () => {
 tasks.set('build', () => {
 	global.DEBUG = process.argv.includes('--debug') || false;
 	return Promise.resolve()
-		// TODO: add jest tests here
+	// TODO: add jest tests here
 		.then(() => run('clean'))
 		.then(() => run('bundle'))
-		.then(() => run('html'));
+		.then(() => run('html'))
 		// .then(() => run('sitemap'));
+		.then(() => {
+			setTimeout(() => process.exit());
+		});
 });
 
 //
@@ -130,7 +137,11 @@ tasks.set('start', () => {
 			const bundle = stats.compilation.chunks.find(x => x.name === 'main').files[0];
 			const template = fs.readFileSync('./public/index.ejs', 'utf8');
 			const render = ejs.compile(template, {filename: './public/index.ejs'});
-			const output = render({debug: true, bundle: `/dist/${bundle}`, config});
+			const output = render({
+				debug: true,
+				bundle: `/dist/${bundle}`,
+				config
+			});
 			fs.writeFileSync('./public/index.html', output, 'utf8');
 
 			// Launch Browsersync after the initial bundling is complete

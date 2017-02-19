@@ -1,25 +1,29 @@
 import emoji from 'emojilib';
-import _ from 'lodash';
+import memoize from 'lodash/memoize';
+import capitalize from 'lodash/capitalize';
+import groupBy from 'lodash/groupBy';
+import pipe from 'lodash/fp/pipe'
+import map from 'lodash/fp/map';
+import uniqBy from 'lodash/fp/uniqBy';
 
-const getList = _.memoize(() => {
-	return emoji.ordered
-		.map(id => ({
-			...emoji.lib[id],
-			id,
-			name: _.capitalize(id.split('_').join(' '))
-		}))
-});
+const getList = memoize(
+	() => emoji.ordered.map(id => ({
+		...emoji.lib[id],
+		id,
+		name: capitalize(id.split('_').join(' '))
+	}))
+);
 
-export const getCategories = _.memoize(() => {
-	return _(getList())
-		.uniqBy('category')
-		.map(emoji => emoji.category)
-		.value();
-});
+export const getCategories = memoize(
+	() => pipe(
+		uniqBy('category'),
+		map(emoji => emoji.category)
+	)(getList())
+);
 
-export const getCategorisedList = _.memoize(() => {
-	return _.groupBy(getList(), 'category');
-});
+export const getCategorisedList = memoize(
+	() => groupBy(getList(), 'category')
+);
 
 const createWordsMatcher = (string) => {
 	const words = string.split(' ').filter(word => word);
@@ -36,9 +40,9 @@ const createWordsMatcher = (string) => {
 	};
 };
 
-export const search = _.memoize(value => {
-	return getList().filter(createWordsMatcher(value));
-});
+export const search = memoize(
+	(value) => getList().filter(createWordsMatcher(value))
+);
 
 export const getUserRelevantFlag = () => {
 	const lang = window.navigator.language;
