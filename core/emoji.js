@@ -26,9 +26,18 @@ export const getCategorisedList = memoize(
 );
 
 const createWordsMatcher = (string) => {
-	const words = string.split(' ').filter(word => word);
+	const words = string
+		.split(' ')
+		.filter(word => word !== '')
+		.map(word => word.toLowerCase());
+
 	return ({keywords, category, name}) => {
-		const wordsToMatch = keywords.concat(category).concat(name);
+
+		const wordsToMatch = keywords
+			.concat(category)
+			.concat(name)
+			.map(word => word.toLowerCase());
+
 		const matchedWords = words.filter(word => {
 			for (let wordToMatch of wordsToMatch) {
 				if (wordToMatch.includes(word)) return true;
@@ -44,7 +53,7 @@ export const search = memoize(
 	(value) => getList().filter(createWordsMatcher(value))
 );
 
-export const getUserRelevantFlag = () => {
+const getUserRelevantFlag = () => {
 	const lang = window.navigator.language;
 
 	if (lang) {
@@ -56,3 +65,14 @@ export const getUserRelevantFlag = () => {
 
 	return '🇫🇷';
 };
+
+export const categories = [
+	{label: "😀", value: "people"},
+	{label: "🙊", value: "animals and nature"},
+	{label: "🍉", value: "food and drink"},
+	{label: "🎾", value: "activity"},
+	{label: "🚗", value: "travel and places"},
+	{label: "💡", value: "objects"},
+	{label: "💟", value: "symbols"},
+	{label: getUserRelevantFlag(), value: "flags"}
+];

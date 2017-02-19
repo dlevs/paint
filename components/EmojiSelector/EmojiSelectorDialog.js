@@ -1,43 +1,53 @@
 import { h, Component } from 'preact';
+import chunk from 'lodash/chunk';
 import ScrollViewport from '../ScrollViewport';
-import { getUserRelevantFlag, search } from '../../core/emoji';
+import { categories, search } from '../../core/emoji';
 import s from './EmojiSelectorDialog.css';
 
+const EMOJI_PER_ROW = 6;
+const EMOJI_SIZE = 80;
 const MIN_SEARCH_LEGNTH = 3;
-
-const categories = [
-	{label: "😀", value: "people"},
-	{label: "🙊", value: "animals and nature"},
-	{label: "🍉", value: "food and drink"},
-	{label: "🎾", value: "activity"},
-	{label: "🚗", value: "travel and places"},
-	{label: "💡", value: "objects"},
-	{label: "💟", value: "symbols"},
-	{label: getUserRelevantFlag(), value: "flags"}
-];
-
-
-/**
- * Allowing react to render every emoji means react has to deal with ~600 items.
- * This causes noticable lag when initially rendering the list.
- *
- * For this reason, it is rendered as a html string.
- * @param emojis
- */
-// const EmojiList = ({emojis}) => (
-//
-// );
-
 
 export default class EmojiSelector extends Component {
 	state = {searchValue: categories[0].value};
 
-	render({handleInput}, {searchValue}) {
+	handleClick = (event) => {
+		if (event.target.value !== undefined) {
+			this.props.handleInput(event);
+		}
+	};
+
+	render(props, {searchValue}) {
 		const isSearchNotLongEnough = searchValue.length < MIN_SEARCH_LEGNTH;
 		const emojis = isSearchNotLongEnough ? [] : search(searchValue);
+		const emojiRows = chunk(emojis, EMOJI_PER_ROW)
+			.map((row, i) => (
+				<div key={i}>
+					{row.map(({char, name}) => (
+						<button
+							key={name}
+							class={s.emojiButton}
+							style={{
+								width: EMOJI_SIZE,
+								height: EMOJI_SIZE,
+								fontSize: EMOJI_SIZE * 0.8
+							}}
+							type="submit"
+							name="emoji"
+							title={name}
+							value={char}
+						>
+							{char}
+						</button>
+					))}
+				</div>
+			));
 
 		return (
-			<div class={s.container}>
+			<div
+				class={s.container}
+				style={{maxWidth: EMOJI_PER_ROW * EMOJI_SIZE}}
+			>
 				<h2>EmojiSelector</h2>
 				<ul class={s.categoryList}>
 					{categories.map(({label, value}) => (
@@ -58,33 +68,11 @@ export default class EmojiSelector extends Component {
 					value={searchValue}
 					onInput={this.linkState('searchValue')}
 				/>
-				{/*<ul*/}
-				{/*class={s.emojiList}*/}
-				{/*onClick={handleInput}*/}
-				{/*>    */}
-
-
-				<ScrollViewport rowHeight={70}>
-					{emojis
-						.filter(({char}) => char)
-						.map(({char, name}, i) => (
-							<div>
-								<button
-									key={name}
-									class={s.emojiButton}
-									type="submit"
-									name="emoji"
-									title={name}
-									value={char}
-								>
-									{char}
-								</button>
-							</div>
-						))}
-				</ScrollViewport>
-
-
-				{/*</ul>*/}
+				<div onClick={this.handleClick}>
+					<ScrollViewport rowHeight={EMOJI_SIZE}>
+						{emojiRows}
+					</ScrollViewport>
+				</div>
 			</div>
 		)
 	}

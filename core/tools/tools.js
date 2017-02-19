@@ -5,6 +5,10 @@ export default new ToolsList([
 		id: 'PENCIL',
 		label: 'Pencil',
 		icon: 'fa-pencil',
+		// ctxProps: {
+		// 	shadowBlur: 0,
+		// 	lineCap: 'square'
+		// },
 		options: [
 			{
 				id: 'SIZE',
@@ -27,11 +31,11 @@ export default new ToolsList([
 			}
 		]
 	},
-	{
-		id: 'BRUSH',
-		label: 'Brush',
-		icon: 'fa-paint-brush'
-	},
+	// {
+	// 	id: 'BRUSH',
+	// 	label: 'Brush',
+	// 	icon: 'fa-paint-brush'
+	// },
 	{
 		id: 'EYEDROPPER',
 		label: 'Eyedropper',
