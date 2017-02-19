@@ -1,4 +1,4 @@
-import ToolsList from './util/ToolsList';
+import ToolsList from './classes/ToolsList';
 
 export default new ToolsList([
 	{

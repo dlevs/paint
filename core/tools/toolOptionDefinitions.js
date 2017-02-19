@@ -1,9 +1,9 @@
 import keyBy from 'lodash/keyBy';
 
 
-// Util function to help create option definitions.
+// Util classes to help create option definitions.
 //---------------------------------------------------
-import ToolOptionDefinition from './util/ToolOptionDefinition';
+import ToolOptionDefinition from './classes/ToolOptionDefinition';
 
 
 // Components used by options
