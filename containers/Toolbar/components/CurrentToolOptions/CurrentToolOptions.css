@@ -1,4 +1,4 @@
-@import '../../../_styles/mixins.css';
+@import "../../../../styles/mixins.css";
 .toolOptionsList {
 	@mixin plain-list;
 	@mixin clearfix;

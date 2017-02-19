@@ -36,7 +36,7 @@ const config = {
 		'!!style!css!normalize.css',
 		'!!style!css!font-awesome/css/font-awesome.min.css',
 
-		'!!style!css!./components/_styles/global.css',
+		'!!style!css!./styles/global.css',
 
 		/* The main entry point of your JavaScript application */
 		'./main.js',
@@ -96,6 +96,7 @@ const config = {
 				include: [
 					path.resolve(__dirname, './actions'),
 					path.resolve(__dirname, './components'),
+					path.resolve(__dirname, './containers'),
 					path.resolve(__dirname, './core'),
 					path.resolve(__dirname, './pages'),
 					path.resolve(__dirname, './main.js'),

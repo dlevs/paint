@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { connect } from 'preact-redux';
 import { setColor, switchColors } from '../../../../core/actions/colorsActions';
-import ColorInput from '../../../_formControls/ColorInput';
+import ColorInput from '../../../../components/_formControls/ColorInput';
 import s from './ColorPicker.css';
 
 const colorKeys = ['primary', 'secondary'];

@@ -1,4 +1,4 @@
-@import "../_styles/mixins.css";
+@import "../../styles/mixins.css";
 .canvas {
 	flex-grow: 1;
 }
