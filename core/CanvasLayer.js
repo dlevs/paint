@@ -1,3 +1,23 @@
+// TODO: Move these
+function distanceBetween(point1, point2) {
+	return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+}
+
+function angleBetween(point1, point2) {
+	return Math.atan2(point2.x - point1.x, point2.y - point1.y);
+}
+
+function hexToRgb(hex) {
+	var bigint = parseInt(hex.substr(1), 16);
+	var r = (bigint >> 16) & 255;
+	var g = (bigint >> 8) & 255;
+	var b = bigint & 255;
+
+	// TODO: unusable return value
+	return r + "," + g + "," + b;
+}
+
+
 export default class CanvasLayer {
 	constructor(canvas, props) {
 		this.canvas = canvas;
@@ -22,7 +42,7 @@ export default class CanvasLayer {
 	//--------------------------------------------------------
 	setColor(color) {
 		const {ctx} = this;
-		ctx.strokeStyle = ctx.fillStylecolor = ctx.shadowColor = color;
+		this.color = ctx.strokeStyle = ctx.fillStylecolor = ctx.shadowColor = color;
 		return this;
 	}
 
@@ -34,6 +54,16 @@ export default class CanvasLayer {
 
 	setShadowBlur(shadowBlur) {
 		this.ctx.shadowBlur = shadowBlur;
+		return this;
+	}
+
+	setCurrentTool(currentTool) {
+		this.currentTool = currentTool;
+		return this;
+	}
+
+	setEmoji(emoji) {
+		this.emoji = emoji;
 		return this;
 	}
 
@@ -53,56 +83,100 @@ export default class CanvasLayer {
 
 	// Drawing Methods
 	//--------------------------------------------------------
-	drawCircle(x, y) {
-		const {ctx} = this;
-		ctx.beginPath();
-		ctx.arc(x, y, ctx.strokeWidth / 2, 0, 2 * Math.PI);
-		ctx.fill();
-		return this;
-	};
-
-	drawLine(x1, y1, x2, y2) {
-		const {ctx} = this;
-		ctx.beginPath();
-		ctx.moveTo(x1, y1);
-		ctx.lineTo(x2, y2);
-		ctx.stroke();
-		return this;
-	};
+	// drawCircle(x, y) {
+	// 	const {ctx} = this;
+	// 	ctx.beginPath();
+	// 	ctx.arc(x, y, ctx.strokeWidth / 2, 0, 2 * Math.PI);
+	// 	ctx.fill();
+	// 	return this;
+	// };
+	//
+	// drawLine(x1, y1, x2, y2) {
+	// 	const {ctx} = this;
+	// 	ctx.beginPath();
+	// 	ctx.moveTo(x1, y1);
+	// 	ctx.lineTo(x2, y2);
+	// 	ctx.stroke();
+	// 	return this;
+	// };
 
 	setStateFromProps(props) {
 		this.currentProps = props;
-		const {colorPrimary, strokeSize, feather} = props;
+		const {
+			colorPrimary,
+			strokeSize,
+			feather,
+			currentTool,
+			emoji
+		} = props;
 
 		return this.setColor(colorPrimary)
 			.setStrokeSize(strokeSize)
-			.setShadowBlur(feather);
+			.setShadowBlur(feather)
+			.setCurrentTool(currentTool)
+			.setEmoji(emoji);
 	}
 
 	clear() {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 
-	drawCurve(points) {
-		if (points.length < 3) {
-			// Not enough points. Exit early
-			// TODO: maybe we can draw a line for 2 points
-			return this;
+
+	drawPoints(lastPoint, currentPoint, draw) {
+		const {ctx} = this;
+		const {lineWidth} = ctx;
+		const distance = distanceBetween(lastPoint, currentPoint);
+		const angle = angleBetween(lastPoint, currentPoint);
+
+		for (let i = 0; i < distance; i += lineWidth / 8) {
+			const x = lastPoint.x + (Math.sin(angle) * i);
+			const y = lastPoint.y + (Math.cos(angle) * i);
+
+			draw(x, y);
 		}
+	}
 
-		this.ctx.beginPath();
-		this.ctx.moveTo(points[0].x, points[0].y);
 
-		for (var i = 1, len = points.length - 2; i < len; i++) {
-			let xc = (points[i].x + points[i + 1].x) / 2;
-			let yc = (points[i].y + points[i + 1].y) / 2;
-			this.ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
-		}
+	// TODO: Move drawing methods to one place
+	drawPENCIL(lastPoint, currentPoint) {
+		const {ctx} = this;
+		const {lineWidth} = ctx;
 
-		// curve through the last two points
-		this.ctx.quadraticCurveTo(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
-		this.ctx.stroke();
-		return this;
-	};
+		// TODO: lazy code
+		const rgb = hexToRgb(this.color);
+		const color = (alpha) => `rgba(${rgb},${alpha})`;
+
+
+		this.drawPoints(lastPoint, currentPoint, (x, y) => {
+			const radgrad = ctx.createRadialGradient(x, y, lineWidth / 4, x, y, lineWidth / 2);
+
+			radgrad.addColorStop(0, color(1));
+			radgrad.addColorStop(0.5, color(0.5));
+			radgrad.addColorStop(1, color(1));
+
+			ctx.fillStyle = radgrad;
+			ctx.fillRect(x - lineWidth / 2, y - lineWidth / 2, lineWidth, lineWidth);
+		});
+	}
+
+	drawEMOJI(lastPoint, currentPoint) {
+		const {ctx} = this;
+		const {lineWidth} = ctx;
+		const offset = lineWidth / 2;
+		ctx.font = `${lineWidth}px serif`;
+
+		this.drawPoints(lastPoint, currentPoint, (x, y) => {
+			ctx.fillText(this.emoji, x - offset, y + offset);
+		});
+	}
+
+	draw(...args) {
+		const {ctx} = this;
+		ctx.save();
+
+		this[`draw${this.currentTool}`](...args);
+
+		ctx.restore();
+	}
 
 }

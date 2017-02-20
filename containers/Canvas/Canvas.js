@@ -9,9 +9,7 @@ import CanvasLayer from '../../core/CanvasLayer';
 
 class Canvas extends Component {
 
-	// Setup
-	//-------------------------------------------------------
-	points = [];
+	lastPoint = null;
 
 	handleEvent = (e) => {
 		const point = getRelativeCoordsOfEvent(e);
@@ -20,20 +18,17 @@ class Canvas extends Component {
 		switch (e.type) {
 			case 'mousedown':
 				this.isMouseDown = true;
-				this.points.push(point);
-				this.canvasLayer.drawCircle(x, y);
+				// this.canvasLayer.draw(this.lastPoint);
+				this.lastPoint = point;
 				break;
 			case 'mouseup':
 				this.isMouseDown = false;
-				this.canvasLayer.clear();
-				this.canvasLayer.drawCurve(this.points);
-				this.points = [];
+				this.lastPoint = null;
 				break;
 			case 'mousemove':
 				if (!this.isMouseDown) return;
-				this.canvasLayer.clear();
-				this.points.push(point);
-				this.canvasLayer.drawCurve(this.points);
+				this.canvasLayer.draw(this.lastPoint, point);
+				this.lastPoint = point;
 				break;
 		}
 	};
@@ -76,9 +71,11 @@ class Canvas extends Component {
 
 export default connect(
 	({colors, currentTool, toolSettings}) => ({
+		currentTool,
 		colorPrimary: colors.primary,
 		colorSecondary: colors.secondary,
 		strokeSize: get(toolSettings, [currentTool, 'SIZE'], 1),
-		feather: get(toolSettings, [currentTool, 'FEATHER'], 0)
+		feather: get(toolSettings, [currentTool, 'FEATHER'], 0),
+		emoji: get(toolSettings, [currentTool, 'EMOJI'], null)
 	})
 )(Canvas);

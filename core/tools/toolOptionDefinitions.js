@@ -19,7 +19,7 @@ const optionDefinitions = [
 		props: {
 			label: 'Size',
 			min: 1,
-			max: 40
+			max: 100
 		},
 		transform: Number
 	},
