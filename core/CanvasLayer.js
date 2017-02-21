@@ -1,3 +1,5 @@
+import Color from 'color';
+
 // TODO: Move these
 function distanceBetween(point1, point2) {
 	return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
@@ -42,7 +44,7 @@ export default class CanvasLayer {
 	//--------------------------------------------------------
 	setColor(color) {
 		const {ctx} = this;
-		this.color = ctx.strokeStyle = ctx.fillStylecolor = ctx.shadowColor = color;
+		ctx.strokeStyle = ctx.fillStylecolor = ctx.shadowColor = color;
 		return this;
 	}
 
@@ -75,7 +77,7 @@ export default class CanvasLayer {
 
 		// Setting canvas size clears the canvas drawings and settings. Restore.
 		this.applyCanvasDefaults();
-		this.setStateFromProps(this.currentProps);
+		this.setStateFromProps(this.props);
 
 		return this;
 	}
@@ -101,7 +103,7 @@ export default class CanvasLayer {
 	// };
 
 	setStateFromProps(props) {
-		this.currentProps = props;
+		this.props = props;
 		const {
 			colorPrimary,
 			strokeSize,
@@ -136,23 +138,19 @@ export default class CanvasLayer {
 		}
 	}
 
-
 	// TODO: Move drawing methods to one place
 	drawPENCIL(lastPoint, currentPoint) {
 		const {ctx} = this;
 		const {lineWidth} = ctx;
-
-		// TODO: lazy code
-		const rgb = hexToRgb(this.color);
-		const color = (alpha) => `rgba(${rgb},${alpha})`;
-
+		const {colorPrimary} = this.props;
+		const color = Color(colorPrimary);
 
 		this.drawPoints(lastPoint, currentPoint, (x, y) => {
 			const radgrad = ctx.createRadialGradient(x, y, lineWidth / 4, x, y, lineWidth / 2);
 
-			radgrad.addColorStop(0, color(1));
-			radgrad.addColorStop(0.5, color(0.5));
-			radgrad.addColorStop(1, color(1));
+			radgrad.addColorStop(0, colorPrimary);
+			radgrad.addColorStop(0.5, color.alpha(0.5));
+			radgrad.addColorStop(1, color.alpha(0));
 
 			ctx.fillStyle = radgrad;
 			ctx.fillRect(x - lineWidth / 2, y - lineWidth / 2, lineWidth, lineWidth);
