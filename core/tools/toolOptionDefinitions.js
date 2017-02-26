@@ -36,6 +36,16 @@ const optionDefinitions = [
 	{
 		id: 'EMOJI',
 		Component: EmojiSelector
+	},
+	{
+		id: 'MAX_STAMP_DISTANCE',
+		Component: RangeInput,
+		props: {
+			label: 'Max Stamp Distance',
+			min: 1,
+			max: 200
+		},
+		transform: Number
 	}
 ].map((option) => new ToolOptionDefinition(option));
 

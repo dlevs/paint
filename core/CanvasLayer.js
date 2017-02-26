@@ -9,15 +9,18 @@ function angleBetween(point1, point2) {
 	return Math.atan2(point2.x - point1.x, point2.y - point1.y);
 }
 
-function hexToRgb(hex) {
-	var bigint = parseInt(hex.substr(1), 16);
-	var r = (bigint >> 16) & 255;
-	var g = (bigint >> 8) & 255;
-	var b = bigint & 255;
+const drawPoints = (size, lastPoint, currentPoint, draw) => {
+	const distance = distanceBetween(lastPoint, currentPoint);
+	const angle = angleBetween(lastPoint, currentPoint);
 
-	// TODO: unusable return value
-	return r + "," + g + "," + b;
-}
+	for (let i = 0; i < distance; i += size / 8) {
+		const x = lastPoint.x + (Math.sin(angle) * i);
+		const y = lastPoint.y + (Math.cos(angle) * i);
+
+		draw(x, y);
+	}
+};
+
 
 
 export default class CanvasLayer {
@@ -30,6 +33,7 @@ export default class CanvasLayer {
 	}
 
 	applyCanvasDefaults() {
+		// TODO: Apply this to Canvas.js file.
 		this.ctx.lineCap = 'round';
 		this.ctx.translate(0.5, 0.5);
 	}
@@ -172,7 +176,7 @@ export default class CanvasLayer {
 		const {ctx} = this;
 		ctx.save();
 
-		this[`draw${this.currentTool}`](...args);
+		brushes(ctx)(...args);
 
 		ctx.restore();
 	}

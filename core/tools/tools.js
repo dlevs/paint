@@ -63,6 +63,10 @@ export default new ToolsList([
 			{
 				id: 'EMOJI',
 				initialValue: '💩'
+			},
+			{
+				id: 'MAX_STAMP_DISTANCE',
+				initialValue: 54
 			}
 		]
 	}
