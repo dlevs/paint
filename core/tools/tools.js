@@ -1,26 +1,23 @@
 import ToolsList from './classes/ToolsList';
 
+import Brush from '../canvas/brushes/Brush';
+import Emoji from '../canvas/brushes/Emoji';
+import Eraser from '../canvas/brushes/Eraser';
+
 export default new ToolsList([
 	{
 		id: 'PENCIL',
 		label: 'Pencil',
 		icon: 'fa-pencil',
-		// ctxProps: {
-		// 	shadowBlur: 0,
-		// 	lineCap: 'square'
-		// },
+		brush: Brush,
 		options: [
 			{
 				id: 'SIZE',
-				initialValue: 200
+				initialValue: 20
 			},
 			{
-				id: 'EASE',
-				initialValue: 'quadIn'
-			},
-			{
-				id: 'OPACITY',
-				initialValue: 0.01
+				id: 'HARDNESS',
+				initialValue: 1
 			},
 			{
 				id: 'COMPOSITE_OPERATION',
@@ -32,18 +29,23 @@ export default new ToolsList([
 		id: 'ERASER',
 		label: 'Eraser',
 		icon: 'fa-eraser',
+		brush: Eraser,
 		options: [
 			{
 				id: 'SIZE',
-				initialValue: 4
+				initialValue: 20
+			},
+			{
+				id: 'HARDNESS',
+				initialValue: 1
 			}
 		]
 	},
-	// {
-	// 	id: 'BRUSH',
-	// 	label: 'Brush',
-	// 	icon: 'fa-paint-brush'
-	// },
+	{
+		id: 'BRUSH',
+		label: 'Brush',
+		icon: 'fa-paint-brush'
+	},
 	{
 		id: 'EYEDROPPER',
 		label: 'Eyedropper',
@@ -63,10 +65,11 @@ export default new ToolsList([
 		id: 'EMOJI',
 		label: 'Emoji',
 		icon: 'fa-smile-o',
+		brush: Emoji,
 		options: [
 			{
 				id: 'SIZE',
-				initialValue: 16
+				initialValue: 20
 			},
 			{
 				id: 'EMOJI',

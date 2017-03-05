@@ -12,7 +12,6 @@ import RangeInput from '../../components/_formControls/RangeInput';
 import SelectInput from '../../components/_formControls/SelectInput';
 import EmojiSelector from '../../components/EmojiSelector';
 
-import eases from 'eases';
 
 const optionDefinitions = [
 	{
@@ -24,14 +23,6 @@ const optionDefinitions = [
 			max: 200
 		},
 		transform: Number
-	},
-	{
-		id: 'EASE',
-		Component: SelectInput,
-		props: {
-			label: 'Easing',
-			options: Object.keys(eases)
-		}
 	},
 	{
 		id: 'COMPOSITE_OPERATION',
@@ -67,6 +58,17 @@ const optionDefinitions = [
 				'luminosity'
 			]
 		}
+	},
+	{
+		id: 'HARDNESS',
+		Component: RangeInput,
+		props: {
+			label: 'Hardness',
+			step: 0.01,
+			min: 0,
+			max: 1
+		},
+		transform: Number
 	},
 	{
 		id: 'OPACITY',
