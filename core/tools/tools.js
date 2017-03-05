@@ -3,6 +3,7 @@ import ToolsList from './classes/ToolsList';
 import Brush from '../canvas/brushes/Brush';
 import Emoji from '../canvas/brushes/Emoji';
 import Eraser from '../canvas/brushes/Eraser';
+import Eyedropper from '../canvas/brushes/Eyedropper';
 
 export default new ToolsList([
 	{
@@ -49,7 +50,8 @@ export default new ToolsList([
 	{
 		id: 'EYEDROPPER',
 		label: 'Eyedropper',
-		icon: 'fa-eyedropper'
+		icon: 'fa-eyedropper',
+		brush: Eyedropper
 	},
 	{
 		id: 'TEXT',

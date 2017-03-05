@@ -5,6 +5,7 @@ import s from './Canvas.css';
 import { getRelativeCoordsOfEvent } from '../../core/util';
 import { checkered } from '../../core/canvas/patterns';
 import tools from '../../core/tools';
+import { actions as colorActions } from '../../core/actions/colorsActions';
 
 class Canvas extends Component {
 
@@ -69,7 +70,7 @@ class Canvas extends Component {
 		return false;
 	}
 
-	componentWillReceiveProps (props) {
+	componentWillReceiveProps(props) {
 		const tool = tools.getById(props.currentTool);
 		this.brush = new tool.brush(this.ctx);
 		this.ctx.globalCompositeOperation = props.compositeOperation;
@@ -86,8 +87,8 @@ class Canvas extends Component {
 
 	// this.canvasLayer.setStateFromProps(props);
 
-// Render
-//-------------------------------------------------------
+	// Render
+	//-------------------------------------------------------
 	render() {
 		return (
 			<canvas
@@ -121,5 +122,6 @@ export default connect(
 			ease: getToolSetting('EASE'),
 			compositeOperation: getToolSetting('COMPOSITE_OPERATION', 'source-over')
 		}
-	}
+	},
+	colorActions
 )(Canvas);

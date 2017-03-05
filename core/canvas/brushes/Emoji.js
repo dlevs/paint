@@ -1,6 +1,6 @@
 import { drawPoints, getOffsetPoint } from '../canvasUtils';
 
-export default class Brush {
+export default class Emoji {
 	constructor(ctx) {
 		this.ctx = ctx;
 	}

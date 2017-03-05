@@ -1,3 +1,5 @@
+// TODO: put actions in reducer file.
+
 import { createReducer } from '../util';
 import { SET_COLOR, SWITCH_COLORS } from '../actions/colorsActions';
 
