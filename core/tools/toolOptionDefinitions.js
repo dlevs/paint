@@ -9,8 +9,10 @@ import ToolOptionDefinition from './classes/ToolOptionDefinition';
 // Components used by options
 //---------------------------------------------------
 import RangeInput from '../../components/_formControls/RangeInput';
+import SelectInput from '../../components/_formControls/SelectInput';
 import EmojiSelector from '../../components/EmojiSelector';
 
+import eases from 'eases';
 
 const optionDefinitions = [
 	{
@@ -19,7 +21,61 @@ const optionDefinitions = [
 		props: {
 			label: 'Size',
 			min: 1,
-			max: 100
+			max: 200
+		},
+		transform: Number
+	},
+	{
+		id: 'EASE',
+		Component: SelectInput,
+		props: {
+			label: 'Easing',
+			options: Object.keys(eases)
+		}
+	},
+	{
+		id: 'COMPOSITE_OPERATION',
+		Component: SelectInput,
+		props: {
+			label: 'Blend Mode',
+			options: [
+				'source-over',
+				'source-in',
+				'source-out',
+				'source-atop',
+				'destination-over',
+				'destination-in',
+				'destination-out',
+				'destination-atop',
+				'lighter',
+				'copy',
+				'xor',
+				'multiply',
+				'screen',
+				'overlay',
+				'darken',
+				'lighten',
+				'color-dodge',
+				'color-burn',
+				'hard-light',
+				'soft-light',
+				'difference',
+				'exclusion',
+				'hue',
+				'saturation',
+				'color',
+				'luminosity'
+			]
+		}
+	},
+	{
+		id: 'OPACITY',
+		Component: RangeInput,
+		props: {
+			label: 'Opacity',
+			step: 0.01,
+			min: 0,
+			max: 1
 		},
 		transform: Number
 	},

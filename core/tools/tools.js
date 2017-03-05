@@ -12,11 +12,19 @@ export default new ToolsList([
 		options: [
 			{
 				id: 'SIZE',
-				initialValue: 4
+				initialValue: 200
 			},
 			{
-				id: 'FEATHER',
-				initialValue: 0
+				id: 'EASE',
+				initialValue: 'quadIn'
+			},
+			{
+				id: 'OPACITY',
+				initialValue: 0.01
+			},
+			{
+				id: 'COMPOSITE_OPERATION',
+				initialValue: 'source-over'
 			}
 		]
 	},
@@ -67,6 +75,10 @@ export default new ToolsList([
 			{
 				id: 'MAX_STAMP_DISTANCE',
 				initialValue: 54
+			},
+			{
+				id: 'OPACITY',
+				initialValue: 1
 			}
 		]
 	}

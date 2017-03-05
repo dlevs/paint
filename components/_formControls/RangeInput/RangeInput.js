@@ -5,6 +5,7 @@ export default ({
 	value,
 	min = 0,
 	max,
+	step = 1,
 	label,
 	handleInput
 }) => (
@@ -17,6 +18,7 @@ export default ({
 				value={value}
 				min={min}
 				max={max}
+				step={step}
 				onInput={handleInput}
 			/>
 		</label>

@@ -13,7 +13,7 @@ export default createReducer(
 		})
 	},
 	{
-		primary: '#000000',
+		primary: '#18a6ff',
 		secondary: '#ffffff'
 	}
 );
